@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { getRecipes } from '../services/recipeService';
+import usePageTitle from '../hooks/usePageTitle';
 
 const CAT_META = {
   Breakfast: { emoji: '🥞', img: 'https://images.unsplash.com/photo-1484723091739-30a097e8f929?w=400&q=80', color: 'from-amber-400 to-orange-400' },
@@ -14,6 +15,7 @@ const CAT_META = {
 };
 
 export default function CategoriesPage() {
+  usePageTitle('Categories');
   const [recipes, setRecipes] = useState([]);
   const [loading, setLoading] = useState(true);
 
@@ -39,13 +41,13 @@ export default function CategoriesPage() {
   }
 
   return (
-    <div className="flex-1 bg-[#F8F7F4]">
+    <div className="flex-1 bg-canvas">
       {/* Header */}
-      <div className="bg-white border-b border-gray-100">
+      <div className="bg-surface border-b border-line">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
-          <span className="text-[#C8472B] text-xs font-bold tracking-widest uppercase">Browse</span>
-          <h1 className="font-display text-4xl font-bold text-gray-900 mt-1 mb-2">Categories</h1>
-          <p className="text-gray-500">Explore recipes by cuisine type and meal category.</p>
+          <span className="text-brand text-xs font-bold tracking-widest uppercase">Browse</span>
+          <h1 className="font-display text-4xl font-bold text-ink mt-1 mb-2">Categories</h1>
+          <p className="text-muted">Explore recipes by cuisine type and meal category.</p>
         </div>
       </div>
 
@@ -60,7 +62,7 @@ export default function CategoriesPage() {
           <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-5 animate-fade-up">
             {categories.map(c => (
               <Link key={c.name} to={`/home?cat=${c.name}`}
-                className="group relative overflow-hidden rounded-2xl aspect-square bg-gray-100 hover:shadow-xl transition-all duration-300 hover:-translate-y-1">
+                className="group relative overflow-hidden rounded-2xl aspect-square bg-field hover:shadow-xl transition-all duration-300 hover:-translate-y-1">
                 <img src={c.img} alt={c.name}
                   className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
                   onError={e => { e.target.style.display = 'none'; }} />
