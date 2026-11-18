@@ -21,6 +21,18 @@ import CallbackPage      from './pages/CallbackPage';
 // Focused auth screens don't need the site footer.
 const NO_FOOTER = ['/login', '/register', '/verify'];
 
+/** Shown when no API server answers (e.g. the frontend is deployed without a backend). */
+function ServerOfflineBanner() {
+  const { serverOnline } = useAuth();
+  if (serverOnline !== false) return null;
+  return (
+    <div role="status" className="bg-brand-soft text-ink text-sm text-center px-4 py-2.5 border-b border-line">
+      <span aria-hidden="true">🔌 </span>
+      The OpenJar server is offline right now, so recipes and sign-in are unavailable. Please check back soon.
+    </div>
+  );
+}
+
 function Layout() {
   const { pathname } = useLocation();
 
@@ -33,6 +45,7 @@ function Layout() {
         Skip to content
       </a>
       <Navbar />
+      <ServerOfflineBanner />
       <main id="main" className="flex-1 flex flex-col">
         <Outlet />
       </main>

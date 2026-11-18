@@ -17,7 +17,7 @@ function GoogleLogo() {
  * has Google sign-in configured (GOOGLE_CLIENT_ID / GOOGLE_CLIENT_SECRET).
  */
 export default function GoogleButton({ label = 'Continue with Google', className = '' }) {
-  const { authOptions, loginWithGoogle } = useAuth();
+  const { authOptions, loginWithGoogle, serverOnline } = useAuth();
   const [busy, setBusy] = useState(false);
   const enabled = Boolean(authOptions?.google);
 
@@ -37,7 +37,7 @@ export default function GoogleButton({ label = 'Continue with Google', className
         <GoogleLogo />
         {busy ? 'Redirecting to Google…' : label}
       </button>
-      {!enabled && (
+      {!enabled && serverOnline !== false && (
         <p id="google-unavailable" className="text-[11px] text-muted text-center mt-1.5">
           Google sign-in isn't enabled on this server yet. Use email for now.
         </p>

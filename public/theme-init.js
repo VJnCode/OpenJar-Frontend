@@ -6,5 +6,5 @@
     if (p === 'dark' || (p !== 'light' && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
       document.documentElement.classList.add('dark');
     }
-  } catch (e) { /* storage blocked: fall back to light */ }
+  } catch { /* storage blocked: fall back to light */ }
 })();

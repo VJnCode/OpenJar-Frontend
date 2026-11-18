@@ -22,7 +22,8 @@ const PERKS = [
 
 export default function LoginPage() {
   usePageTitle('Sign in');
-  const { user, login } = useAuth();
+  const { user, login, serverOnline } = useAuth();
+  const offline = serverOnline === false;
   const navigate = useNavigate();
   const [params] = useSearchParams();
   const [busy, setBusy] = useState(false);
@@ -60,7 +61,7 @@ export default function LoginPage() {
             </div>
             <button
               onClick={() => { setBusy(true); login(); }}
-              disabled={busy}
+              disabled={busy || offline}
               className="group w-full py-3.5 bg-brand text-white text-[15px] font-bold rounded-xl hover:bg-brand-dark active:scale-[0.99] transition-all duration-200 flex items-center justify-center gap-2.5 shadow-lg shadow-brand/30 disabled:opacity-75"
             >
               {busy ? (

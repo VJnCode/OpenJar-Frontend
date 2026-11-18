@@ -7,13 +7,21 @@
 const SAFE_METHODS = new Set(['GET', 'HEAD', 'OPTIONS']);
 
 export class ApiError extends Error {
-  constructor(message, status, fieldErrors = {}) {
+  constructor(message, status, fieldErrors = {}, { offline = false } = {}) {
     super(message);
     this.name = 'ApiError';
     this.status = status;
     this.fieldErrors = fieldErrors;
+    /** True when no API server answered (network error, proxy error, or static host). */
+    this.offline = offline;
   }
 }
+
+const OFFLINE_MESSAGE = "Can't reach the OpenJar server right now. Please try again later.";
+const offlineError = () => new ApiError(OFFLINE_MESSAGE, 0, {}, { offline: true });
+
+/** Gateway/proxy errors mean the backend itself is down, not that the request was bad. */
+const isGatewayDown = (status) => status === 502 || status === 503 || status === 504;
 
 function readCookie(name) {
   const match = document.cookie.split('; ').find(row => row.startsWith(`${name}=`));
@@ -24,7 +32,11 @@ export async function getCsrfToken() {
   let token = readCookie('XSRF-TOKEN');
   if (!token) {
     // Any response from the gateway sets the cookie; this endpoint is just the cheapest one.
-    await fetch('/api/csrf', { credentials: 'include' });
+    try {
+      await fetch('/api/csrf', { credentials: 'include' });
+    } catch {
+      throw offlineError();
+    }
     token = readCookie('XSRF-TOKEN');
   }
   return token;
@@ -69,8 +81,20 @@ export async function apiFetch(path, { method = 'GET', body, headers = {}, ...re
       body: body === undefined ? undefined : JSON.stringify(body),
       ...rest,
     });
-  } catch {
-    throw new ApiError('Cannot reach the server. Is the backend running?', 0);
+  } catch (err) {
+    if (err?.name === 'AbortError') throw err;
+    throw offlineError();
+  }
+
+  // A static host (e.g. Vercel without an API rewrite) answers API paths with the SPA's
+  // index.html and status 200. Never treat that page as data: it would look like a
+  // successful response (even a "logged-in user").
+  // Likewise an error that did not come from our gateway (it stamps every response with
+  // X-Request-Id) is the host's own 404/5xx page: the API is simply not there.
+  const contentType = res.headers.get('Content-Type') || '';
+  const fromGateway = res.headers.has('X-Request-Id');
+  if (contentType.includes('text/html') || isGatewayDown(res.status) || (!res.ok && !fromGateway)) {
+    throw offlineError();
   }
 
   const text = await res.text();
