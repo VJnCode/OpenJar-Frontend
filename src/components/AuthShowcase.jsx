@@ -33,9 +33,11 @@ export default function AuthShowcase() {
       ))}
       <div className="absolute inset-0 bg-gradient-to-b from-black/45 via-black/5 to-black/75" />
 
-      <Link to="/" className="absolute z-10 top-8 left-10 flex items-center gap-2.5 pointer-events-auto">
-        <span className="w-9 h-9 rounded-xl bg-[#C8472B] flex items-center justify-center text-sm font-bold shadow-lg shadow-[#C8472B]/40">OJ</span>
-        <span className="font-display text-2xl font-bold">OpenJar</span>
+      <Link to="/" className="absolute z-10 top-7 left-9 pointer-events-auto" aria-label="OpenJar home">
+        <span className="inline-flex items-center gap-2 pl-1.5 pr-4 py-1.5 rounded-2xl bg-white/90 backdrop-blur shadow-xl">
+          <img src="/logo-mark.png" alt="" width="34" height="34" className="w-[34px] h-[34px]" />
+          <span className="font-display text-xl font-bold text-stone-900">Open<span className="text-[#C8472B]">Jar</span></span>
+        </span>
       </Link>
 
       {CHIPS.map(c => (

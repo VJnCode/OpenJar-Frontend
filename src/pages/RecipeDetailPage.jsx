@@ -261,7 +261,7 @@ export default function RecipeDetailPage() {
 
           {isOwner && (
             <div className="flex gap-3 sm:ml-auto">
-              <Button variant="secondary" onClick={() => navigate(`/recipe/${id}/edit`)}>Edit Recipe</Button>
+              <Button variant="secondary" onClick={() => navigate(`/recipes/${id}/edit`)}>Edit Recipe</Button>
               <Button variant="danger" loading={deleting} onClick={handleDelete}>Delete</Button>
             </div>
           )}

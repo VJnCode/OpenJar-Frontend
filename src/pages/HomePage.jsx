@@ -162,7 +162,7 @@ export default function HomePage() {
                   <h2 className="font-display text-2xl font-bold text-ink">Featured Recipe</h2>
                   <a href="#latest" className="text-sm text-brand font-semibold hover:underline">See all {filtered.length} →</a>
                 </div>
-                <Link to={`/recipe/${featured.recipeId}`}
+                <Link to={`/recipes/${featured.recipeId}`}
                   className="group grid grid-cols-1 lg:grid-cols-5 rounded-3xl overflow-hidden bg-surface shadow-lg hover:shadow-2xl transition-all duration-500 border border-line">
                   <div className="lg:col-span-3 relative overflow-hidden aspect-video lg:aspect-auto lg:h-[420px]">
                     <img loading="lazy" referrerPolicy="no-referrer"

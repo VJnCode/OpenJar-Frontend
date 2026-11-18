@@ -1,5 +1,5 @@
 import { useEffect } from 'react';
-import { BrowserRouter, Routes, Route, Outlet, Navigate, Link, useLocation } from 'react-router-dom';
+import { BrowserRouter, Routes, Route, Outlet, Navigate, Link, useLocation, useParams } from 'react-router-dom';
 import { AuthProvider, useAuth } from './context/AuthContext';
 import { ToastProvider } from './context/ToastContext';
 import Navbar from './components/Navbar';
@@ -61,6 +61,12 @@ function RequireAuth({ children }) {
   return children;
 }
 
+/** Old /recipe/:id links (emails, bookmarks) now live at /recipes/:id. */
+function LegacyRecipeRedirect() {
+  const { id } = useParams();
+  return <Navigate to={`/recipes/${id}`} replace />;
+}
+
 function NotFound() {
   return (
     <div className="flex-1 flex flex-col items-center justify-center gap-4 py-24">
@@ -80,8 +86,9 @@ export default function App() {
           <Route element={<Layout />}>
             <Route path="/"                element={<Navigate to="/home" replace />} />
             <Route path="/home"            element={<HomePage />} />
-            <Route path="/recipe/:id"      element={<RecipeDetailPage />} />
-            <Route path="/recipe/:id/edit" element={<RequireAuth><CreateRecipePage /></RequireAuth>} />
+            <Route path="/recipes/:id"      element={<RecipeDetailPage />} />
+            <Route path="/recipe/:id"       element={<LegacyRecipeRedirect />} />
+            <Route path="/recipes/:id/edit" element={<RequireAuth><CreateRecipePage /></RequireAuth>} />
             <Route path="/create"          element={<RequireAuth><CreateRecipePage /></RequireAuth>} />
             <Route path="/profile/:id"     element={<ProfilePage />} />
             <Route path="/categories"      element={<CategoriesPage />} />

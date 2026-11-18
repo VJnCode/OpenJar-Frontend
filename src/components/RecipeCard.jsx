@@ -25,7 +25,7 @@ export default function RecipeCard({ recipe, index = 0 }) {
   if (!id) return null;
 
   return (
-    <Link to={`/recipe/${id}`}
+    <Link to={`/recipes/${id}`}
       className="group block bg-surface rounded-3xl border border-line p-2.5 shadow-sm hover:shadow-card hover:border-brand/30 transition-all duration-300 hover:-translate-y-1">
       {/* Image */}
       <div className="relative overflow-hidden rounded-2xl aspect-[4/3] bg-field">

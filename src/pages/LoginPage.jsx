@@ -4,6 +4,7 @@ import { useAuth } from '../context/AuthContext';
 import AuthShowcase from '../components/AuthShowcase';
 import GoogleButton from '../components/GoogleButton';
 import usePageTitle from '../hooks/usePageTitle';
+import Logo from '../components/Logo';
 
 function greeting() {
   const h = new Date().getHours();
@@ -39,6 +40,7 @@ export default function LoginPage() {
         <div className="absolute -top-24 -right-32 w-96 h-96 rounded-full bg-[radial-gradient(circle,#fbeae5_0%,transparent_70%)] pointer-events-none" />
 
         <div className="w-full max-w-sm relative animate-fade-up">
+          <div className="flex justify-center lg:hidden mb-8"><Logo variant="full" size={150} /></div>
           <p className="text-xs font-bold text-brand tracking-[0.14em] uppercase mb-2">{greeting()}</p>
           <h1 className="font-display text-4xl font-bold text-ink leading-tight mb-3">Sign in to your kitchen</h1>
           <p className="text-muted mb-8 leading-relaxed">

@@ -44,7 +44,7 @@ export default function CreateRecipePage() {
     getRecipe(id)
       .then(r => {
         if (String(r.userId) !== String(user?.userId)) {
-          navigate(`/recipe/${id}`, { replace: true });
+          navigate(`/recipes/${id}`, { replace: true });
           return;
         }
         setForm({
@@ -99,7 +99,7 @@ export default function CreateRecipePage() {
     try {
       const saved = isEdit ? await updateRecipe(id, payload) : await createRecipe(payload);
       toast.success(isEdit ? 'Recipe updated' : 'Your recipe is live! 🎉');
-      navigate(`/recipe/${saved?.recipeId ?? id}`);
+      navigate(`/recipes/${saved?.recipeId ?? id}`);
     } catch (err) {
       setError(err.message);
     } finally {

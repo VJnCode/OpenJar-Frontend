@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import { Link, NavLink, useLocation } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 import ThemeToggle from './ThemeToggle';
+import Logo from './Logo';
 
 export default function Navbar() {
   const { user, loading, login, logout } = useAuth();
@@ -27,11 +28,8 @@ export default function Navbar() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-[68px] flex items-center justify-between gap-6">
 
         {/* Logo */}
-        <Link to="/" className="flex items-center gap-2 flex-shrink-0">
-          <div className="w-9 h-9 rounded-xl bg-brand flex items-center justify-center shadow-lg shadow-brand/30">
-            <span className="text-white font-bold text-sm tracking-tight">OJ</span>
-          </div>
-          <span className="font-display text-ink text-xl font-bold tracking-tight">OpenJar</span>
+        <Link to="/" className="flex-shrink-0 transition-transform hover:-rotate-2" aria-label="OpenJar home">
+          <Logo size={40} />
         </Link>
 
         {/* Center nav */}

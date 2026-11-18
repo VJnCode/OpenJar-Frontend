@@ -6,6 +6,7 @@ import InputField from '../components/InputField';
 import AuthShowcase from '../components/AuthShowcase';
 import GoogleButton from '../components/GoogleButton';
 import usePageTitle from '../hooks/usePageTitle';
+import Logo from '../components/Logo';
 
 const USERNAME_RE = /^[\p{L}\p{N} ._-]{3,50}$/u;
 
@@ -57,11 +58,8 @@ export default function RegisterPage() {
       {/* Right — form */}
       <div className="flex-1 flex items-center justify-center px-8 py-16">
         <div className="w-full max-w-sm animate-fade-up">
-          <Link to="/" className="flex items-center gap-2 mb-12">
-            <div className="w-7 h-7 rounded-lg bg-brand flex items-center justify-center">
-              <span className="text-white font-bold text-xs">OJ</span>
-            </div>
-            <span className="font-display font-bold text-ink">OpenJar</span>
+          <Link to="/" className="flex justify-center lg:hidden mb-8" aria-label="OpenJar home">
+            <Logo variant="full" size={150} />
           </Link>
 
           <p className="text-xs font-semibold text-muted tracking-widest uppercase mb-1">Get started</p>

@@ -1,6 +1,7 @@
 import { useEffect, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
+import Logo from '../components/Logo';
 
 export default function CallbackPage() {
   const navigate = useNavigate();
@@ -16,6 +17,7 @@ export default function CallbackPage() {
 
   return (
     <div className="min-h-screen flex flex-col items-center justify-center gap-4 bg-canvas">
+      <Logo variant="full" size={170} className="animate-fade-up mb-2" />
       <div className="w-12 h-12 border-4 border-brand border-t-transparent rounded-full animate-spin" />
       <p className="text-muted font-medium">Signing you in…</p>
     </div>
